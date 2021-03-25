@@ -26,5 +26,5 @@
     "not dead",
     "not op_mini all"
   ],
-  "proxy": "http://localhost:8080"
+  "proxy": "https://project-management-tool2.herokuapp.com/"
 }
