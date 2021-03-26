@@ -7,11 +7,15 @@ import BoardContent from "./BoardContent";
 function ProjectBoard(props) {
   const { id } = props.match.params;
 
-  const { dispatch } = useStateValue();
+  const { state, dispatch } = useStateValue();
 
   useEffect(() => {
-    getProjectTasks(id, dispatch);
-  }, []);
+    if (state.security.user) {
+      getProjectTasks(id, dispatch);
+    } else {
+      props.history.push("/login");
+    }
+  }, [state.security]);
 
   return (
     <div className="container">

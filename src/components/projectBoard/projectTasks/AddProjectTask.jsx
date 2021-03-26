@@ -1,24 +1,26 @@
-import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
-import {addProjectTask} from '../../../actions/projectTaskAction';
-import {useStateValue} from '../../../Store';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { addProjectTask } from "../../../actions/projectTaskAction";
+import { useStateValue } from "../../../Store";
 
 function AddProjectTask(props) {
-
-  const {projectId} = props.match.params;
-  const {state: {errors}, dispatch} = useStateValue();
+  const { id } = props.match.params;
+  const {
+    state: { errors },
+    dispatch
+  } = useStateValue();
 
   const [newProjectTask, setNewProjectTask] = useState({
-    summary:"",
-    acceptanceCriteria:"",
-    dueDate:"",
-    priority:"",
-    status:""
+    summary: "",
+    acceptanceCriteria: "",
+    dueDate: "",
+    priority: "",
+    status: ""
   });
 
   function handleChange(e) {
-    const {name, value} = e.target;
-    setNewProjectTask(prevValue => {
+    const { name, value } = e.target;
+    setNewProjectTask((prevValue) => {
       return {
         ...prevValue,
         [name]: value
@@ -28,7 +30,7 @@ function AddProjectTask(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    addProjectTask(props.history, projectId, newProjectTask, dispatch);
+    addProjectTask(props.history, id, newProjectTask, dispatch);
   }
 
   return (
@@ -36,7 +38,7 @@ function AddProjectTask(props) {
       <div className="container">
         <div className="row">
           <div className="col-md-8 m-auto">
-            <Link to={`/projectBoard/${projectId}`} className="btn btn-light">
+            <Link to={`/projectBoard/${id}`} className="btn btn-light">
               Back to Project Board
             </Link>
             <h4 className="display-4 text-center">Add Project Task</h4>
@@ -45,18 +47,19 @@ function AddProjectTask(props) {
               <div className="form-group">
                 <input
                   type="text"
-                  className={"form-control form-control-lg " + (errors.summary && "is-invalid")}
+                  className={
+                    "form-control form-control-lg " +
+                    (errors.summary && "is-invalid")
+                  }
                   name="summary"
                   placeholder="Project Task summary"
                   value={newProjectTask.summary}
                   onChange={handleChange}
                 />
                 {errors.summary && (
-                <div className="invalid-feedback">
-                  {errors.summary}
-                </div>
+                  <div className="invalid-feedback">{errors.summary}</div>
                 )}
-                </div>
+              </div>
               <div className="form-group">
                 <textarea
                   className="form-control form-control-lg"
@@ -104,17 +107,13 @@ function AddProjectTask(props) {
                 </select>
               </div>
 
-              <input
-                type="submit"
-                className="btn btn-primary btn-block mt-4"
-              />
+              <input type="submit" className="btn btn-primary btn-block mt-4" />
             </form>
           </div>
         </div>
       </div>
     </div>
   );
-
 }
 
 export default AddProjectTask;
